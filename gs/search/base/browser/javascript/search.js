@@ -188,8 +188,9 @@ GSSearch = function () {
             init_prev_button();
 	    nextButton = widget.find('.gs-search-toolbar-next');
             init_next_button();
-
-            load_results();
         },//init
-    };
+	load: function () {
+	    load_results();
+	}, // load
+    };// Public methods
 }(); // GSSearch
