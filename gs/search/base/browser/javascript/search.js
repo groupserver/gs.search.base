@@ -45,7 +45,7 @@ GSSearch = function () {
         if (offset < 0) {
             offset = 0
         }
-        latestTopics.fadeOut(FADE_SPEED, FADE_METHOD, do_topics_load);
+        results.fadeOut(FADE_SPEED, FADE_METHOD, do_results_load);
     };//handle_prev
     
     // Next button
@@ -62,10 +62,10 @@ GSSearch = function () {
         if (searchInput.val()) {
             offset = offset + limit;
         } else {
-            nSticky = latestTopics.find('.sticky').length;
+            nSticky = results.find('.sticky').length;
             offset = offset + limit - nSticky;
         }
-        latestTopics.fadeOut(FADE_SPEED, FADE_METHOD, do_topics_load);
+        results.fadeOut(FADE_SPEED, FADE_METHOD, do_resultss_load);
     };//handle_next
     
     // Search Input
@@ -89,16 +89,16 @@ GSSearch = function () {
     var handle_search = function (eventObject) {
         searchText = searchInput.val();
         offset = 0;
-        latestTopics.fadeOut(FADE_SPEED, FADE_METHOD, do_topics_load);
+        results.fadeOut(FADE_SPEED, FADE_METHOD, do_results_load);
     };//handle_search
 
-    // Code to load the topics in a pleasing way.
-    var do_topics_load = function () {
+    // Code to load the results in a pleasing way.
+    var do_results_load = function () {
         // Function used by the buttons.
-        loadingMessage.fadeIn(FADE_SPEED, FADE_METHOD, load_topics);
-    };//do_topics_load
-    var load_topics = function() {
-        // Actually load the topics, making am AJAX request
+        loadingMessage.fadeIn(FADE_SPEED, FADE_METHOD, load_results);
+    };//do_results_load
+    var load_results = function() {
+        // Actually load the results, making am AJAX request
         var data = {
             'i': offset,
             'l': limit,
@@ -114,49 +114,48 @@ GSSearch = function () {
         advancedSearch.attr('href', newHref);
         
         jQuery.post(ajaxPage, data, load_complete);
-    };// load_topics
+    };// load_results
     var load_complete = function(responseText, textStatus, request) {
-        // Set the contents of the Topics list to the respose.
-        latestTopics.html(responseText);
-        // Hide the Loading message and show the topics
-        loadingMessage.fadeOut(FADE_SPEED, FADE_METHOD, show_topics);
+        // Set the contents of the results-list to the respose.
+        latestResults.html(responseText);
+        // Hide the Loading message and show the results.
+        loadingMessage.fadeOut(FADE_SPEED, FADE_METHOD, show_results);
     };// load_complete
-    var show_topics = function () {
-        // Show the topics list, and enable the buttons as required.
-        var nTopics = null;
-        latestTopics.fadeIn(FADE_SPEED, FADE_METHOD);
+    var show_results = function () {
+        // Show the results list, and enable the buttons as required.
+        var nResults = null;
+        latestResultss.fadeIn(FADE_SPEED, FADE_METHOD);
         prevButton.button('option', 'disabled', offset <= 0);
         
-        nTopics = latestTopics.find('.topic').length;
-        nextButton.button('option', 'disabled', nTopics < limit);
+        nResults = results.find('.result').length;
+        nextButton.button('option', 'disabled', nResultss < limit);
 
         // Hmmmm
         init_keywords();
         
-        if ((offset <= 0) && (nTopics < limit) && toolbarShown) {
+        if ((offset <= 0) && (nResults < limit) && toolbarShown) {
             toolbar.fadeOut('fast', FADE_METHOD);
             toolbarShown = false;
-        } else if (((offset > 0) || (nTopics >= limit)) && !toolbarShown) {
+        } else if (((offset > 0) || (nResults >= limit)) && !toolbarShown) {
             toolbar.fadeIn('fast', FADE_METHOD);
             toolbarShown = true;
         }
 	
-	if ((nTopics == 0) && searchShown) {
+	if ((nResults == 0) && searchShown) {
 	    searchInput.fadeOut('fast', FADE_METHOD);
 	    searchButton.fadeOut('fast', FADE_METHOD);
 	    searchShown = false;
-	} else if ((nTopics > 0) && !searchShown) {
+	} else if ((nResults > 0) && !searchShown) {
 	    searchInput.fadeIn('fast', FADE_METHOD);
 	    searchButton.fadeIn('fast', FADE_METHOD);
 	    searchShown = true;
 	}
-
-    };//Show_topics
+    };//show_results
 
     var init_keywords = function () {
         var result = null;
         var keywords = null;
-        keywords = latestTopics.find('.keyword');
+        keywords = results.find('.keyword');
         keywords.removeAttr('href').css("cursor","pointer");
         keywords.click(handle_keyword_click);
     };//init_keywords
