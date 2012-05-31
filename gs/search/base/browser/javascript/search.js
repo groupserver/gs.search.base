@@ -149,6 +149,7 @@ GSSearch = function () {
 	    searchButton.fadeIn('fast', FADE_METHOD);
 	    searchShown = true;
 	}
+	//TODO: Bubble up a "resultsloaded" event.
     };//show_results
 
     // Keywords
@@ -193,4 +194,4 @@ GSSearch = function () {
 	    load_results();
 	}, // load
     };// Public methods
-}(); // GSSearch
+}(); // GSSearch TODO: remove the () so it becomes a normal class
