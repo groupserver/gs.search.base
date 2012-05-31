@@ -23,6 +23,7 @@ GSSearch = function () {
     var searchText = '';
     var toolbarShown = true;
     var searchShown = true;
+
     // Constants
     var MAX_ITEMS = 48;
     var FADE_SPEED = 'slow';
@@ -30,9 +31,25 @@ GSSearch = function () {
     
     // Private methods
     
+    // Previous Button
+    var init_prev_button = function() {
+        prevButton.button({
+            text: true,
+            icons: { primary: 'ui-icon-carat-1-w', },
+            disabled: true,
+        });
+        prevButton.click(handle_prev);
+    };// init_prev_button
+    var handle_prev = function(eventObject) {
+        offset = offset - limit;
+        if (offset < 0) {
+            offset = 0
+        }
+        latestTopics.fadeOut(FADE_SPEED, FADE_METHOD, do_topics_load);
+    };//handle_prev
+    
     // Next button
     var init_next_button = function() {
-        nextButton = jQuery('#gs-group-messages-topics-toolbar-next');
         nextButton.button({
             text: true,
             icons: { secondary: 'ui-icon-carat-1-e', },
@@ -51,26 +68,17 @@ GSSearch = function () {
         latestTopics.fadeOut(FADE_SPEED, FADE_METHOD, do_topics_load);
     };//handle_next
     
-    // Previous Button
-    var init_prev_button = function() {
-        prevButton = jQuery('#gs-group-messages-topics-toolbar-prev');
-        prevButton.button({
-            text: true,
-            icons: { primary: 'ui-icon-carat-1-w', },
-            disabled: true,
-        });
-        prevButton.click(handle_prev);
-    };// init_prev_button
-    var handle_prev = function(eventObject) {
-        offset = offset - limit;
-        if (offset < 0) {
-            offset = 0
+    // Search Input
+    var init_search_input = function () {
+        searchInput.keypress(handle_search_input);
+    };// init_search_input
+    var handle_search_input = function(eventObject) {
+        if (eventObject.which == 13) {
+            searchButton.click();
         }
-        latestTopics.fadeOut(FADE_SPEED, FADE_METHOD, do_topics_load);
-    };//handle_prev
-    
+    };// handle_search_input
+    // Search Button
     var init_search_button = function() {
-        searchButton = jQuery('#gs-group-messages-topics-search-button');
         searchButton.button({
             text: false,
             icons: { primary: 'ui-icon-search', },
@@ -83,17 +91,7 @@ GSSearch = function () {
         offset = 0;
         latestTopics.fadeOut(FADE_SPEED, FADE_METHOD, do_topics_load);
     };//handle_search
-    
-    var init_search_input = function () {
-        searchInput = jQuery('#gs-group-messages-topics-search-input');
-        searchInput.keypress(handle_search_input);
-    };
-    var handle_search_input = function(eventObject) {
-        if (eventObject.which == 13) {
-            searchButton.click();
-        }
-    };
-    
+
     // Code to load the topics in a pleasing way.
     var do_topics_load = function () {
         // Function used by the buttons.
@@ -131,7 +129,8 @@ GSSearch = function () {
         
         nTopics = latestTopics.find('.topic').length;
         nextButton.button('option', 'disabled', nTopics < limit);
-        
+
+        // Hmmmm
         init_keywords();
         
         if ((offset <= 0) && (nTopics < limit) && toolbarShown) {
@@ -176,17 +175,19 @@ GSSearch = function () {
 	    additionalQuery = additionalQuery;
             
 	    widget = jQuery(widgetId);
+
 	    searchInput = widget.find('.gs-search-entry input[type="text"]');
+            init_search_input();
 	    searchButton = widget.find('.gs-search-entry button');
+            init_search_button();
+
 	    loadingMessage = widget.find('.gs-search-loading');
 	    results = widget.find('.gs-search-results');
+
 	    toolbar = widget.find('.gs-search-toolbar');
 	    prevButton = widget.find('.gs-search-toolbar-previous');
-	    nextButton = widget.find('.gs-search-toolbar-next');
-
-            init_search_input();
-            init_search_button();
             init_prev_button();
+	    nextButton = widget.find('.gs-search-toolbar-next');
             init_next_button();
 
             load_results();
