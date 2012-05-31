@@ -25,6 +25,19 @@ having the following selectors.
     - Next: ``.gs-search-toolbar-next``
     - Previous: ``.gs-search-toolbar-previous``
 
+Search Results
+--------------
+
+After the `JavaScript`_ makes the AJAX-call the results will be
+displayed in the ``.gs-search-results`` element. To be processed
+properly the results have to conform to the following HTML:
+
+* Result: ``.result``
+
+  + Keywords [#keywords]_: ``.keyword``
+
+The result may also be marked with the optional ``.sticky`` class [#sticky]_.
+
 JavaScript
 ==========
 
@@ -47,6 +60,10 @@ The JavaScript initializer looks like the following::
 
 ``additionalQuery``:
   Extra items to pass to the ``ajaxPage`` as part of the query.
+
+.. [#keywords] The keywords are optional.
+.. [#sticky] The sticky results are shown first. They need to be known for the
+	     calculation for the *Next* button.
 
 .. _GroupServer: http://groupserver.org/
 .. _OnlineGroups.Net: http://onlinegroups.net/
