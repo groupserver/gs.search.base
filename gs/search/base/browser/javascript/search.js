@@ -108,29 +108,28 @@ GSSearch = function () {
         var query = null;
         var newHref = null;
         
-        href = advancedSearch.attr('href');
-        query = '&i='+offset+'&s='+searchText.replace(/ /, '+');
-        newHref = href.replace(/&i.*$/, query);
-        advancedSearch.attr('href', newHref);
+        //href = advancedSearch.attr('href');
+        //query = '&i='+offset+'&s='+searchText.replace(/ /, '+');
+        //newHref = href.replace(/&i.*$/, query);
+        //advancedSearch.attr('href', newHref);
         
         jQuery.post(ajaxPage, data, load_complete);
     };// load_results
     var load_complete = function(responseText, textStatus, request) {
         // Set the contents of the results-list to the respose.
-        latestResults.html(responseText);
+        results.html(responseText);
         // Hide the Loading message and show the results.
         loadingMessage.fadeOut(FADE_SPEED, FADE_METHOD, show_results);
     };// load_complete
     var show_results = function () {
         // Show the results list, and enable the buttons as required.
         var nResults = null;
-        latestResultss.fadeIn(FADE_SPEED, FADE_METHOD);
+        results.fadeIn(FADE_SPEED, FADE_METHOD);
         prevButton.button('option', 'disabled', offset <= 0);
         
         nResults = results.find('.result').length;
         nextButton.button('option', 'disabled', nResultss < limit);
 
-        // Hmmmm
         init_keywords();
         
         if ((offset <= 0) && (nResults < limit) && toolbarShown) {
@@ -152,6 +151,7 @@ GSSearch = function () {
 	}
     };//show_results
 
+    // Keywords
     var init_keywords = function () {
         var result = null;
         var keywords = null;
@@ -174,15 +174,15 @@ GSSearch = function () {
 	    additionalQuery = additionalQuery;
             
 	    widget = jQuery(widgetId);
-
+	    
 	    searchInput = widget.find('.gs-search-entry input[type="text"]');
             init_search_input();
 	    searchButton = widget.find('.gs-search-entry button');
             init_search_button();
-
+	    
 	    loadingMessage = widget.find('.gs-search-loading');
 	    results = widget.find('.gs-search-results');
-
+	    
 	    toolbar = widget.find('.gs-search-toolbar');
 	    prevButton = widget.find('.gs-search-toolbar-previous');
             init_prev_button();
