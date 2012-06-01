@@ -15,6 +15,7 @@ var GSSearch = function (widgetId, ajaxPage, offset, limit, additionalQuery, adv
     var searchText = '';
     var toolbarShown = true;
     var searchShown = true;
+    var resultsShown = false;
 
     // Constants
     var MAX_ITEMS = 48;
@@ -76,7 +77,7 @@ var GSSearch = function (widgetId, ajaxPage, offset, limit, additionalQuery, adv
             icons: { primary: 'ui-icon-search', },
             disabled: false,
         });
-        searchButton.click(handle_search)
+        searchButton.click(handle_search);
     };//init_search_button
     var handle_search = function (eventObject) {
         searchText = searchInput.val();
@@ -137,16 +138,17 @@ var GSSearch = function (widgetId, ajaxPage, offset, limit, additionalQuery, adv
             toolbarShown = true;
         }
     
-    if ((nResults == 0) && searchShown) {
-        searchInput.fadeOut('fast', FADE_METHOD);
-        searchButton.fadeOut('fast', FADE_METHOD);
-        searchShown = false;
-    } else if ((nResults > 0) && !searchShown) {
-        searchInput.fadeIn('fast', FADE_METHOD);
-        searchButton.fadeIn('fast', FADE_METHOD);
-        searchShown = true;
-    }
-    //TODO: Bubble up a "resultsloaded" event.
+        if ((nResults == 0) && searchShown) {
+            searchInput.fadeOut('fast', FADE_METHOD);
+            searchButton.fadeOut('fast', FADE_METHOD);
+            searchShown = false;
+        } else if ((nResults > 0) && !searchShown) {
+            searchInput.fadeIn('fast', FADE_METHOD);
+            searchButton.fadeIn('fast', FADE_METHOD);
+            searchShown = true;
+        }
+        //TODO: Bubble up a "resultsloaded" event.
+	resultsShown = true;
     };//show_results
 
     // Keywords
@@ -170,27 +172,30 @@ var GSSearch = function (widgetId, ajaxPage, offset, limit, additionalQuery, adv
     // This is the closest we'll get to a classical constructor.
     //
     var init = function() {
-    widget = jQuery(widgetId);
+        widget = jQuery(widgetId);
     
-    searchInput = widget.find('.gs-search-entry input[type="text"]');
-    init_search_input();
-    searchButton = widget.find('.gs-search-entry button');
-    init_search_button();
-    
-    loadingMessage = widget.find('.gs-search-loading');
-    results = widget.find('.gs-search-results');
-    
-    toolbar = widget.find('.gs-search-toolbar');
-    prevButton = widget.find('.gs-search-toolbar-previous');
-    init_prev_button();
-    nextButton = widget.find('.gs-search-toolbar-next');
-    init_next_button();
+        searchInput = widget.find('.gs-search-entry input[type="text"]');
+        init_search_input();
+        searchButton = widget.find('.gs-search-entry button');
+        init_search_button();
+        
+        loadingMessage = widget.find('.gs-search-loading');
+        results = widget.find('.gs-search-results');
+        
+        toolbar = widget.find('.gs-search-toolbar');
+        prevButton = widget.find('.gs-search-toolbar-previous');
+        init_prev_button();
+        nextButton = widget.find('.gs-search-toolbar-next');
+        init_next_button();
     }();//init **Note** the () is deliberate so this function is run.
 
     // Return the public methods and properties.
     return {
-    load: function () {
-            load_results();
-    }, // load
+        load: function () {
+            searchButton.click();
+        }, // load
+        results_shown: function () {
+            return resultsShown;
+        },// results_shown
     };// Public methods
 };//GSSearch
