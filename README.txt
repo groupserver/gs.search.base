@@ -95,14 +95,27 @@ following prototype::
   The *Advanced Search* link. This will be updated to reflect the current
   search.
 
-One public method is provided by the class: ``load`` to make a query and
-load the results. An example of a typical call would be as follows (taken
-from ``gs.group.messages.posts``)::
+Methods
+-------
+
+There are two public methods: `load`_ and `results_shown`_.
+
+``load``
+~~~~~~~~
+
+The ``load`` method makes a query and load the results. An example of a
+typical call would be as follows (taken from ``gs.group.messages.posts``)::
 
   var s = GSSearch('#gs-group-messages-posts-search', 
                    'gs-group-messages-posts-ajax.html', 
                    0, 12, {}, null);
   s.load();
+
+``results_shown``
+~~~~~~~~~~~~~~~~~
+
+The ``results_shown`` method returns ``true`` if the results have been
+loaded, and ``false`` otherwise.
 
 AJAX Page
 =========
