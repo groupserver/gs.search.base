@@ -1,6 +1,6 @@
 // GroupServer JavaScript module for providing the Search mechanism
 jQuery.noConflict();
-GSSearch = function () {
+var GSSearch = function (widgetId, ajaxPage, offset, limit, additionalQuery, advancedSearch) {
     // Private variables
     // Widgets
     var widget = null;
@@ -12,14 +12,6 @@ GSSearch = function () {
     var prevButton = null;
     var nextButton = null;
 
-    var advancedSearch = null;
-
-    // Search Info
-    var ajaxPage = null;
-    var offset = null;
-    var limit = null;
-    var additionalQuery = null;
-
     var searchText = '';
     var toolbarShown = true;
     var searchShown = true;
@@ -28,7 +20,7 @@ GSSearch = function () {
     var MAX_ITEMS = 48;
     var FADE_SPEED = 'slow';
     var FADE_METHOD = 'swing';
-    
+
     // Private methods
     
     // Previous Button
@@ -170,33 +162,32 @@ GSSearch = function () {
         searchButton.click();
     };//handle_keyword_click
 
-    // Public methods and properties.
-    return {
-        init: function (widgetId, ap, o, l, aq, as) {
-        ajaxPage = ap;
-        offset = o;
-            limit = l;
-        additionalQuery = aq;
-            advancedSearch = as;
+    //
+    // The Initializer
+    // This is the closest we'll get to a classical constructor.
+    //
+    var init = function() {
+	widget = jQuery(widgetId);
+	
+	searchInput = widget.find('.gs-search-entry input[type="text"]');
+	init_search_input();
+	searchButton = widget.find('.gs-search-entry button');
+	init_search_button();
+	
+	loadingMessage = widget.find('.gs-search-loading');
+	results = widget.find('.gs-search-results');
+	
+	toolbar = widget.find('.gs-search-toolbar');
+	prevButton = widget.find('.gs-search-toolbar-previous');
+	init_prev_button();
+	nextButton = widget.find('.gs-search-toolbar-next');
+	init_next_button();
+    }();//init **Note** the () is deliberate so this function is run.
 
-        widget = jQuery(widgetId);
-        
-        searchInput = widget.find('.gs-search-entry input[type="text"]');
-            init_search_input();
-        searchButton = widget.find('.gs-search-entry button');
-            init_search_button();
-        
-        loadingMessage = widget.find('.gs-search-loading');
-        results = widget.find('.gs-search-results');
-        
-        toolbar = widget.find('.gs-search-toolbar');
-        prevButton = widget.find('.gs-search-toolbar-previous');
-            init_prev_button();
-        nextButton = widget.find('.gs-search-toolbar-next');
-            init_next_button();
-        },//init
-    load: function () {
-        load_results();
-    }, // load
+    // Return the public methods and properties.
+    return {
+	load: function () {
+            load_results();
+	}, // load
     };// Public methods
-}(); // GSSearch TODO: remove the () so it becomes a normal class
+};//GSSearch

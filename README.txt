@@ -41,9 +41,9 @@ The result may also be marked with the optional ``.sticky`` class [#sticky]_.
 JavaScript
 ==========
 
-The JavaScript initializer looks like the following::
+The JavaScript class has the following prototype::
   
-  GSSearch.init(widgetId, ajaxPage, offset, limit, additionalQuery, advancedSearch)
+  GSSearch(widgetId, ajaxPage, offset, limit, additionalQuery, advancedSearchId)
 
 ``widgetId``:
    The `HTML`_ identifier of the search widget.
@@ -61,8 +61,18 @@ The JavaScript initializer looks like the following::
 ``additionalQuery``:
   Extra items to pass to the ``ajaxPage`` as part of the query.
 
-``advancedSearch``:
-  The Advanced Search link. This will be updated to reflect the current search.
+``advancedSearchId``: 
+  The *Advanced Search* link. This will be updated to reflect the current
+  search.
+
+One public method is provided by the class: ``load`` to make a query and
+load the results. An example of a typical call would be as follows (taken
+from ``gs.group.messages.posts``)::
+
+  var s = GSSearch('#gs-group-messages-posts-search', 
+                   'gs-group-messages-posts-ajax.html', 
+                   0, 12, '', null);
+  s.load();
 
 .. [#keywords] The keywords are optional.
 .. [#sticky] The sticky results are shown first. They need to be known for the
