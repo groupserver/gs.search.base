@@ -43,7 +43,7 @@ JavaScript
 
 The JavaScript initializer looks like the following::
   
-  GSSearch.init(widgetId, ajaxPage, offset, limit, additionalQuery)
+  GSSearch.init(widgetId, ajaxPage, offset, limit, additionalQuery, advancedSearch)
 
 ``widgetId``:
    The `HTML`_ identifier of the search widget.
@@ -60,6 +60,9 @@ The JavaScript initializer looks like the following::
 
 ``additionalQuery``:
   Extra items to pass to the ``ajaxPage`` as part of the query.
+
+``advancedSearch``:
+  The Advanced Search link. This will be updated to reflect the current search.
 
 .. [#keywords] The keywords are optional.
 .. [#sticky] The sticky results are shown first. They need to be known for the

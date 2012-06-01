@@ -65,7 +65,7 @@ GSSearch = function () {
             nSticky = results.find('.sticky').length;
             offset = offset + limit - nSticky;
         }
-        results.fadeOut(FADE_SPEED, FADE_METHOD, do_resultss_load);
+        results.fadeOut(FADE_SPEED, FADE_METHOD, do_results_load);
     };//handle_next
     
     // Search Input
@@ -108,11 +108,13 @@ GSSearch = function () {
         var query = null;
         var newHref = null;
         
-        //href = advancedSearch.attr('href');
-        //query = '&i='+offset+'&s='+searchText.replace(/ /, '+');
-        //newHref = href.replace(/&i.*$/, query);
-        //advancedSearch.attr('href', newHref);
-        
+    if (advancedSearch) {
+            href = advancedSearch.attr('href');
+            query = '&i='+offset+'&s='+searchText.replace(/ /, '+');
+            newHref = href.replace(/&i.*$/, query);
+            advancedSearch.attr('href', newHref);
+    }
+
         jQuery.post(ajaxPage, data, load_complete);
     };// load_results
     var load_complete = function(responseText, textStatus, request) {
@@ -128,7 +130,7 @@ GSSearch = function () {
         prevButton.button('option', 'disabled', offset <= 0);
         
         nResults = results.find('.result').length;
-        nextButton.button('option', 'disabled', nResultss < limit);
+        nextButton.button('option', 'disabled', nResults < limit);
 
         init_keywords();
         
@@ -139,17 +141,17 @@ GSSearch = function () {
             toolbar.fadeIn('fast', FADE_METHOD);
             toolbarShown = true;
         }
-	
-	if ((nResults == 0) && searchShown) {
-	    searchInput.fadeOut('fast', FADE_METHOD);
-	    searchButton.fadeOut('fast', FADE_METHOD);
-	    searchShown = false;
-	} else if ((nResults > 0) && !searchShown) {
-	    searchInput.fadeIn('fast', FADE_METHOD);
-	    searchButton.fadeIn('fast', FADE_METHOD);
-	    searchShown = true;
-	}
-	//TODO: Bubble up a "resultsloaded" event.
+    
+    if ((nResults == 0) && searchShown) {
+        searchInput.fadeOut('fast', FADE_METHOD);
+        searchButton.fadeOut('fast', FADE_METHOD);
+        searchShown = false;
+    } else if ((nResults > 0) && !searchShown) {
+        searchInput.fadeIn('fast', FADE_METHOD);
+        searchButton.fadeIn('fast', FADE_METHOD);
+        searchShown = true;
+    }
+    //TODO: Bubble up a "resultsloaded" event.
     };//show_results
 
     // Keywords
@@ -157,8 +159,10 @@ GSSearch = function () {
         var result = null;
         var keywords = null;
         keywords = results.find('.keyword');
-        keywords.removeAttr('href').css("cursor","pointer");
-        keywords.click(handle_keyword_click);
+	if (keywords.length > 0) {
+            keywords.removeAttr('href').css("cursor","pointer");
+            keywords.click(handle_keyword_click);
+        }
     };//init_keywords
     var handle_keyword_click = function(eventObject) {
         var searchText = jQuery(this).text();
@@ -168,30 +172,31 @@ GSSearch = function () {
 
     // Public methods and properties.
     return {
-        init: function (widgetId, ajaxPage, offset, limit, additionalQuery) {
-	    ajaxPage = ajaxPage;
-            offset = offset;
-            limit = limit;
-	    additionalQuery = additionalQuery;
-            
-	    widget = jQuery(widgetId);
-	    
-	    searchInput = widget.find('.gs-search-entry input[type="text"]');
+        init: function (widgetId, ap, o, l, aq, as) {
+        ajaxPage = ap;
+        offset = o;
+            limit = l;
+        additionalQuery = aq;
+            advancedSearch = as;
+
+        widget = jQuery(widgetId);
+        
+        searchInput = widget.find('.gs-search-entry input[type="text"]');
             init_search_input();
-	    searchButton = widget.find('.gs-search-entry button');
+        searchButton = widget.find('.gs-search-entry button');
             init_search_button();
-	    
-	    loadingMessage = widget.find('.gs-search-loading');
-	    results = widget.find('.gs-search-results');
-	    
-	    toolbar = widget.find('.gs-search-toolbar');
-	    prevButton = widget.find('.gs-search-toolbar-previous');
+        
+        loadingMessage = widget.find('.gs-search-loading');
+        results = widget.find('.gs-search-results');
+        
+        toolbar = widget.find('.gs-search-toolbar');
+        prevButton = widget.find('.gs-search-toolbar-previous');
             init_prev_button();
-	    nextButton = widget.find('.gs-search-toolbar-next');
+        nextButton = widget.find('.gs-search-toolbar-next');
             init_next_button();
         },//init
-	load: function () {
-	    load_results();
-	}, // load
+    load: function () {
+        load_results();
+    }, // load
     };// Public methods
 }(); // GSSearch TODO: remove the () so it becomes a normal class
