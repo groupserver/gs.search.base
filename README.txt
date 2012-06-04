@@ -1,7 +1,42 @@
 Introduction
 ============
 
-The core `GroupServer`_  search code.
+The core `GroupServer`_  search code is split in to three main components. 
+
+#. Each subsystem provides an `AJAX Page`_ that conforms to the API
+   outlined here.
+
+#. The same subsystems provide a skeleton of `HTML`_ that is used to
+   display the standard search-widget.
+
+#. Finally, this product supplies a `JavaScript`_ class that is used to
+   provide some standard behaviour for the different search interfaces.
+
+By having one JavaScript resource fewer requests have to be made by the
+browser, and the errors in the code are reduced.
+
+AJAX Page
+=========
+
+The AJAX page is provided by products **other** than this one. When the
+user interacts with the `HTML`_ the `JavaScript`_ makes a ``POST`` query
+passing the following values:
+
+``i``:
+  The *index* (or *offset*) into the search-results.
+
+``l``:
+  The number of results to return (the *length*).
+
+``s``:
+  The *search* text that is set .
+
+The AJAX pages **must** conform to this API. Other arguments to the AJAX
+page can be passed in as the ``additionalQuery`` argument during the
+`creation`_ of the search-widget.
+
+The HTML returned by the page *must* contain `search results`_ that conform
+to the standard markup.
 
 HTML
 ====
@@ -25,11 +60,14 @@ having the following selectors.
     - Next: ``.gs-search-toolbar-next``
     - Previous: ``.gs-search-toolbar-previous``
 
+During the `creation`_ of the search widget `jQuery.UI`_ is used to add
+some functionality to the items.
+
 Search Results
 --------------
 
-After the `JavaScript`_ makes the AJAX-call the results will be
-displayed in the ``.gs-search-results`` element. To be processed
+The `JavaScript`_ calls the `AJAX page`_. The results returned by the page
+will be displayed in the ``.gs-search-results`` element. To be processed
 properly the results have to conform to the following HTML:
 
 * Result: ``.result``
@@ -49,7 +87,7 @@ Behaviour
 ---------
 
 The JavaScript binds event handlers to the three buttons in the interface:
-*Search*, *Next*, and *Previous* (see `HTML`). Whenever these three buttons
+*Search*, *Next*, and *Previous* (see `HTML`_). Whenever these three buttons
 are pressed:
 
 #. The current results are hidden,
@@ -103,13 +141,10 @@ There are two public methods: `load`_ and `results_shown`_.
 ``load``
 ~~~~~~~~
 
-The ``load`` method makes a query and load the results. An example of a
-typical call would be as follows (taken from ``gs.group.messages.posts``)::
-
-  var s = GSSearch('#gs-group-messages-posts-search', 
-                   'gs-group-messages-posts-ajax.html', 
-                   0, 12, {}, null);
-  s.load();
+The ``load`` method makes a query and load the results. The results are not
+loaded during the `creation`_ of the widget because in most circumstances
+(such as with the Posts [#posts]_ and Files [#files]_ tabs on the Group
+page) the results do not need to be loaded when the widget is created.
 
 ``results_shown``
 ~~~~~~~~~~~~~~~~~
@@ -117,29 +152,11 @@ typical call would be as follows (taken from ``gs.group.messages.posts``)::
 The ``results_shown`` method returns ``true`` if the results have been
 loaded, and ``false`` otherwise.
 
-AJAX Page
-=========
-
-The AJAX page is provided by products **other** than this one. The
-`JavaScript`_ makes a ``POST`` query passing the following values:
-
-``i``:
-  The *index* (*offset*) into the search-results.
-
-``l``:
-  The number of results to return (the *length*).
-
-``s``:
-  The *search* text that is set .
-
-The AJAX pages **must** conform to this API. Other arguments to the AJAX
-page can be passed in as the ``additionalQuery`` argument during the
-`creation`_ of the search-widget.
-
 .. [#keywords] The keywords are optional.
 .. [#sticky] The sticky results are shown first. They need to be known for the
 	     calculation for the *Next* button.
-
+.. [#posts] See ``gs.group.messages.posts``.
+.. [#files] See ``gs.group.messages.files``.
 .. _GroupServer: http://groupserver.org/
 .. _OnlineGroups.Net: http://onlinegroups.net/
-
+.. _jQuery.UI: http://jqueryui.com/
