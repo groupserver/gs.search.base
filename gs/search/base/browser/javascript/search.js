@@ -55,7 +55,7 @@ var GSSearch = function (widgetId, ajaxPage, offset, limit, additionalQuery, adv
         if (searchInput.val()) {
             offset = offset + limit;
         } else {
-            nSticky = results.find('.sticky').length;
+            nSticky = results.find('.gs-search-sticky').length;
             offset = offset + limit - nSticky;
         }
         results.fadeOut(FADE_SPEED, FADE_METHOD, do_results_load);
@@ -125,7 +125,7 @@ var GSSearch = function (widgetId, ajaxPage, offset, limit, additionalQuery, adv
         results.fadeIn(FADE_SPEED, FADE_METHOD);
         prevButton.button('option', 'disabled', offset <= 0);
         
-        nResults = results.find('.result').length;
+        nResults = results.find('.gs-search-result').length;
         nextButton.button('option', 'disabled', nResults < limit);
 
         init_keywords();
@@ -155,7 +155,7 @@ var GSSearch = function (widgetId, ajaxPage, offset, limit, additionalQuery, adv
     var init_keywords = function () {
         var result = null;
         var keywords = null;
-        keywords = results.find('.keyword');
+        keywords = results.find('.gs-search-keyword');
     if (keywords.length > 0) {
             keywords.removeAttr('href').css("cursor","pointer");
             keywords.click(handle_keyword_click);

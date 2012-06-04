@@ -70,11 +70,11 @@ The `JavaScript`_ calls the `AJAX page`_. The results returned by the page
 will be displayed in the ``.gs-search-results`` element. To be processed
 properly the results have to conform to the following HTML:
 
-* Result: ``.result``
+* Result: ``.gs-search-result``
 
-  + Keywords [#keywords]_: ``.keyword``
+  + Keywords [#keywords]_: ``.gs-search-keyword``
 
-The result may also be marked with the optional ``.sticky`` class [#sticky]_.
+The result may also be marked with the optional ``.gs-search-sticky`` class [#sticky]_.
 
 JavaScript
 ==========
