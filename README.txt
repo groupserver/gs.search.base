@@ -29,7 +29,7 @@ passing the following values:
   The number of results to return (the *length*).
 
 ``s``:
-  The *search* text that is set .
+  The text to *search* for [#search]_.
 
 The AJAX pages **must** conform to this API. Other arguments to the AJAX
 page can be passed in as the ``additionalQuery`` argument during the
@@ -111,10 +111,10 @@ The JavaScript code to power the search-system is provided by the resource
 ``/++resource++search-20120601.js``. It provides a class that has the
 following prototype::
   
-  GSSearch(widgetId, ajaxPage, offset, limit, additionalQuery, advancedSearchId)
+  GSSearch(widget, ajaxPage, offset, limit, additionalQuery, advancedSearchId)
 
-``widgetId``:
-   The `HTML`_ identifier of the search widget.
+``widget``:
+   The selector for the `HTML`_ widget (normally an ID-selector).
 
 ``ajaxPage``:
   The page to query to get the AJAX results (see `AJAX Page`_ below).
@@ -152,6 +152,9 @@ page) the results do not need to be loaded when the widget is created.
 The ``results_shown`` method returns ``true`` if the results have been
 loaded, and ``false`` otherwise.
 
+.. [#search] If the `AJAX page`_ does not support searching then the
+             `HTML`_ should be modified so the search-button is within a
+             ``div`` element with the ``display:none;`` style set.
 .. [#keywords] The keywords are optional.
 .. [#sticky] The sticky results are shown first. They need to be known for the
 	     calculation for the *Next* button.
