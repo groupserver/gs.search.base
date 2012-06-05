@@ -21,6 +21,7 @@ var GSSearch = function (widgetId, ajaxPage, offset, limit, additionalQuery, adv
     var MAX_ITEMS = 48;
     var FADE_SPEED = 'slow';
     var FADE_METHOD = 'swing';
+    var RESULTS_LOADED_EVENT = "resultsloaded";
 
     // Private methods
     
@@ -147,16 +148,22 @@ var GSSearch = function (widgetId, ajaxPage, offset, limit, additionalQuery, adv
             searchButton.fadeIn('fast', FADE_METHOD);
             searchShown = true;
         }
-        //TODO: Bubble up a "resultsloaded" event.
-	resultsShown = true;
+
+        propogate_results_loaded_event()
+        resultsShown = true;
     };//show_results
+
+    var propogate_results_loaded_event = function() {
+        var event = jQuery.Event(RESULTS_LOADED_EVENT);
+        widget.trigger(event);
+    };
 
     // Keywords
     var init_keywords = function () {
         var result = null;
         var keywords = null;
         keywords = results.find('.gs-search-keyword');
-    if (keywords.length > 0) {
+        if (keywords.length > 0) {
             keywords.removeAttr('href').css("cursor","pointer");
             keywords.click(handle_keyword_click);
         }
@@ -197,5 +204,6 @@ var GSSearch = function (widgetId, ajaxPage, offset, limit, additionalQuery, adv
         results_shown: function () {
             return resultsShown;
         },// results_shown
+        'RESULTS_LOADED_EVENT': RESULTS_LOADED_EVENT, 
     };// Public methods
 };//GSSearch
