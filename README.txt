@@ -87,15 +87,15 @@ Behaviour
 ---------
 
 The JavaScript binds event handlers to the three buttons in the interface:
-*Search*, *Next*, and *Previous* (see `HTML`_). Whenever these three buttons
-are pressed:
+*Search*, *Next*, and *Previous* (see `HTML`_). Whenever these three
+buttons are pressed, or the `load`_ method is called, the following occurs:
 
 #. The current results are hidden,
 #. The loading message is shown, and
 #. A ``POST`` request is made to the `AJAX Page`_.
 
-Once the request returns the loading message is hidden, and the results are
-shown.
+Once the request returns the loading message is hidden, the results are
+shown, and an `event`_ is raised.
 
 Both the *Next* and *Previous* buttons modify an internal counter, that
 keeps track of the current *index* into the search-results, which is passed
@@ -152,6 +152,14 @@ page) the results do not need to be loaded when the widget is created.
 The ``results_shown`` method returns ``true`` if the results have been
 loaded, and ``false`` otherwise.
 
+Event
+-----
+
+After the search-results have been loaded the search-widget will trigger a
+``resultsloaded`` event. External systems may ``bind`` to this event to add
+functionality. For convenience [#convenience]_ a constant for this string,
+``RESULTS_LOADED_EVENT``, is exported by the class.
+
 .. [#search] If the `AJAX page`_ does not support searching then the
              `HTML`_ should be modified so the search-button is within a
              ``div`` element with the ``display:none;`` style set.
@@ -160,6 +168,7 @@ loaded, and ``false`` otherwise.
 	     calculation for the *Next* button.
 .. [#posts] See ``gs.group.messages.posts``.
 .. [#files] See ``gs.group.messages.files``.
+.. [#convenience] Convenience, and the fact that I prefer constants to strings.
 .. _GroupServer: http://groupserver.org/
 .. _OnlineGroups.Net: http://onlinegroups.net/
 .. _jQuery.UI: http://jqueryui.com/
