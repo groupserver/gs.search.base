@@ -7,7 +7,7 @@
 
   <!--The JavaScript library for the search boxes-->
   <browser:resource
-    name="search-20120601.js"
+    name="gs-search-base-js-20120606.js"
     file="browser/javascript/search.js"
     permission="zope2.Public" />
 
