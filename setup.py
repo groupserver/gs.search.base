@@ -32,6 +32,7 @@ setup(name='gs.search.base',
     zip_safe=True,
     install_requires=[
         'setuptools',
+        'gs.content.js.jquery',
         # -*- Extra requirements: -*-
     ],
     entry_points="""
