@@ -30,7 +30,7 @@ var GSSearch = function (widgetId, ajaxPage, offset, limit, additionalQuery, adv
         prevButton.button({
             text: true,
             icons: { primary: 'ui-icon-carat-1-w', },
-            disabled: true,
+            disabled: true
         });
         prevButton.click(handle_prev);
     };// init_prev_button
@@ -47,7 +47,7 @@ var GSSearch = function (widgetId, ajaxPage, offset, limit, additionalQuery, adv
         nextButton.button({
             text: true,
             icons: { secondary: 'ui-icon-carat-1-e', },
-            disabled: true,
+            disabled: true
         });
         nextButton.click(handle_next);
     };// init_next_button
@@ -76,7 +76,7 @@ var GSSearch = function (widgetId, ajaxPage, offset, limit, additionalQuery, adv
         searchButton.button({
             text: false,
             icons: { primary: 'ui-icon-search', },
-            disabled: false,
+            disabled: false
         });
         searchButton.click(handle_search);
     };//init_search_button
@@ -204,6 +204,6 @@ var GSSearch = function (widgetId, ajaxPage, offset, limit, additionalQuery, adv
         results_shown: function () {
             return resultsShown;
         },// results_shown
-        'RESULTS_LOADED_EVENT': RESULTS_LOADED_EVENT, 
+        'RESULTS_LOADED_EVENT': RESULTS_LOADED_EVENT
     };// Public methods
 };//GSSearch
