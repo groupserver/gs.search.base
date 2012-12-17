@@ -29,7 +29,7 @@ var GSSearch = function (widgetId, ajaxPage, offset, limit, additionalQuery, adv
     var init_prev_button = function() {
         prevButton.button({
             text: true,
-            icons: { primary: 'ui-icon-carat-1-w', },
+            icons: { primary: 'ui-icon-carat-1-w' },
             disabled: true
         });
         prevButton.click(handle_prev);
@@ -46,7 +46,7 @@ var GSSearch = function (widgetId, ajaxPage, offset, limit, additionalQuery, adv
     var init_next_button = function() {
         nextButton.button({
             text: true,
-            icons: { secondary: 'ui-icon-carat-1-e', },
+            icons: { secondary: 'ui-icon-carat-1-e' },
             disabled: true
         });
         nextButton.click(handle_next);
@@ -75,7 +75,7 @@ var GSSearch = function (widgetId, ajaxPage, offset, limit, additionalQuery, adv
     var init_search_button = function() {
         searchButton.button({
             text: false,
-            icons: { primary: 'ui-icon-search', },
+            icons: { primary: 'ui-icon-search' },
             disabled: false
         });
         searchButton.click(handle_search);
