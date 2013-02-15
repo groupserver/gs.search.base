@@ -94,15 +94,34 @@ function GSSearch(widgetId, ajaxPage, offset, limit, additionalQuery,
         loadingMessage.fadeOut(FADE_SPEED, FADE_METHOD, show_results);
         loadingMessage.attr('aria-hidden', 'true');
     };// load_complete
+
+    function disable_button(b) {
+        b.attr('disabled', 'disabled');
+        b.attr('aria-disabled', 'true');
+    }
+    function enable_button(b) {
+        b.removeAttr('disabled');
+        b.attr('aria-disabled', 'false');
+    }
+
     function show_results() {
         // Show the results list, and enable the buttons as required.
         var nResults = null;
         results.fadeIn(FADE_SPEED, FADE_METHOD);
         results.attr('aria-hidden', 'false');
-        //prevButton.button('option', 'disabled', offset <= 0); FIXME
+        
+        if (offset <= 0) {
+            disable_button(prevButton);
+        } else {
+            enable_button(prevButton);
+        }
         
         nResults = results.find('.gs-search-result').length;
-        //nextButton.button('option', 'disabled', nResults < limit); FIXME
+        if (nResults < limit) {
+            disable_button(nextButton);
+        } else {
+            enable_button(nextButton);
+        }
 
         init_keywords();
         
