@@ -12,11 +12,11 @@ function GSSearch(widgetId, ajaxPage, offset, limit, additionalQuery,
         RESULTS_LOADED_EVENT = "resultsloaded";
 
     // Private methods
-    function disable_button(b) {
+    function disable(b) {
         b.attr('disabled', 'disabled');
         b.attr('aria-disabled', 'true');
     }
-    function enable_button(b) {
+    function enable(b) {
         b.removeAttr('disabled');
         b.attr('aria-disabled', 'false');
     }  
@@ -24,7 +24,6 @@ function GSSearch(widgetId, ajaxPage, offset, limit, additionalQuery,
     // Previous Button
     function init_prev_button() {
         prevButton.on('click', handle_prev);
-        disable_button(prevButton);        
     };// init_prev_button
     function handle_prev(eventObject) {
         offset = offset - limit;
@@ -37,7 +36,6 @@ function GSSearch(widgetId, ajaxPage, offset, limit, additionalQuery,
     // Next button
     function init_next_button() {
         nextButton.on('click', handle_next);
-        disable_button(nextButton);
     };// init_next_button
     function handle_next(eventObject) {
         var nSticky = null;
@@ -65,6 +63,11 @@ function GSSearch(widgetId, ajaxPage, offset, limit, additionalQuery,
         searchButton.on('click', handle_search);
     };//init_search_button
     function handle_search(eventObject) {
+        disable(searchInput);
+        disable(searchButton);
+        disable(prevButton);        
+        disable(nextButton);
+
         searchText = searchInput.val();
         offset = 0;
         results.fadeOut(FADE_SPEED, FADE_METHOD, do_results_load);
@@ -110,17 +113,18 @@ function GSSearch(widgetId, ajaxPage, offset, limit, additionalQuery,
         results.fadeIn(FADE_SPEED, FADE_METHOD);
         results.attr('aria-hidden', 'false');
         
+        enable(searchInput);
+        enable(searchButton);
         if (offset <= 0) {
-            disable_button(prevButton);
+            disable(prevButton);
         } else {
-            enable_button(prevButton);
+            enable(prevButton);
         }
-        
         nResults = results.find('.gs-search-result').length;
         if (nResults < limit) {
-            disable_button(nextButton);
+            disable(nextButton);
         } else {
-            enable_button(nextButton);
+            enable(nextButton);
         }
 
         init_keywords();
