@@ -1,36 +1,23 @@
 // GroupServer JavaScript module for providing the Search mechanism
 jQuery.noConflict();
-var GSSearch = function (widgetId, ajaxPage, offset, limit, additionalQuery, advancedSearch) {
+function GSSearch(widgetId, ajaxPage, offset, limit, additionalQuery, 
+                  advancedSearch) {
     // Private variables
     // Widgets
-    var widget = null;
-    var searchInput = null;
-    var searchButton = null;
-    var loadingMessage = null;
-    var results = null;
-    var toolbar = null;
-    var prevButton = null;
-    var nextButton = null;
-
-    var ajaxPageUrl = '';
-    var searchText = '';
-    var toolbarShown = true;
-    var searchShown = true;
-    var resultsShown = false;
-
-    // Constants
-    var MAX_ITEMS = 48;
-    var FADE_SPEED = 'slow';
-    var FADE_METHOD = 'swing';
-    var RESULTS_LOADED_EVENT = "resultsloaded";
+    var widget = null, searchInput = null, searchButton = null, 
+        loadingMessage = null, results = null, toolbar = null, 
+        prevButton = null, nextButton = null, ajaxPageUrl = '', searchText = '',
+        toolbarShown = true, searchShown = true, resultsShown = false,
+        FADE_SPEED = 'slow', FADE_METHOD = 'swing', 
+        RESULTS_LOADED_EVENT = "resultsloaded";
 
     // Private methods
     
     // Previous Button
-    var init_prev_button = function() {
+    function init_prev_button() {
         prevButton.on('click', handle_prev);
     };// init_prev_button
-    var handle_prev = function(eventObject) {
+    function handle_prev(eventObject) {
         offset = offset - limit;
         if (offset < 0) {
             offset = 0
@@ -39,10 +26,10 @@ var GSSearch = function (widgetId, ajaxPage, offset, limit, additionalQuery, adv
     };//handle_prev
     
     // Next button
-    var init_next_button = function() {
+    function init_next_button() {
         nextButton.on('click', handle_next);
     };// init_next_button
-    var handle_next = function(eventObject) {
+    function handle_next(eventObject) {
         var nSticky = null;
         if (searchInput.val()) {
             offset = offset + limit;
@@ -54,35 +41,33 @@ var GSSearch = function (widgetId, ajaxPage, offset, limit, additionalQuery, adv
     };//handle_next
     
     // Search Input
-    var init_search_input = function () {
+    function init_search_input() {
         searchInput.keypress(handle_search_input);
     };// init_search_input
-    var handle_search_input = function(eventObject) {
+    function handle_search_input(eventObject) {
         if (eventObject.which == 13) {
             searchButton.click();
         }
     };// handle_search_input
+
     // Search Button
-    var init_search_button = function() {
+    function init_search_button() {
         searchButton.on('click', handle_search);
     };//init_search_button
-    var handle_search = function (eventObject) {
+    function handle_search(eventObject) {
         searchText = searchInput.val();
         offset = 0;
         results.fadeOut(FADE_SPEED, FADE_METHOD, do_results_load);
     };//handle_search
 
     // Code to load the results in a pleasing way.
-    var do_results_load = function () {
+    function do_results_load() {
         // Function used by the buttons.
         loadingMessage.fadeIn(FADE_SPEED, FADE_METHOD, load_results);
     };//do_results_load
-    var load_results = function() {
+    function load_results() {
         // Actually load the results, making am AJAX request
-        var data = null;
-        var href = null;
-        var query = null;
-        var newHref = null;
+        var data = null, href = null, query = null, newHref = null;
         
         if (advancedSearch) {
             href = advancedSearch.attr('href');
@@ -100,13 +85,13 @@ var GSSearch = function (widgetId, ajaxPage, offset, limit, additionalQuery, adv
         data['s'] = searchText;
         jQuery.post(ajaxPageUrl, data, load_complete);
     };// load_results
-    var load_complete = function(responseText, textStatus, request) {
+    function load_complete(responseText, textStatus, request) {
         // Set the contents of the results-list to the respose.
         results.html(responseText);
         // Hide the Loading message and show the results.
         loadingMessage.fadeOut(FADE_SPEED, FADE_METHOD, show_results);
     };// load_complete
-    var show_results = function () {
+    function show_results() {
         // Show the results list, and enable the buttons as required.
         var nResults = null;
         results.fadeIn(FADE_SPEED, FADE_METHOD);
@@ -139,22 +124,21 @@ var GSSearch = function (widgetId, ajaxPage, offset, limit, additionalQuery, adv
         resultsShown = true;
     };//show_results
 
-    var propogate_results_loaded_event = function() {
+    function propogate_results_loaded_event() {
         var event = jQuery.Event(RESULTS_LOADED_EVENT);
         widget.trigger(event);
     };
 
     // Keywords
-    var init_keywords = function () {
-        var result = null;
-        var keywords = null;
+    function init_keywords() {
+        keywords = null;
         keywords = results.find('.gs-search-keyword');
         if (keywords.length > 0) {
             keywords.removeAttr('href').css("cursor","pointer");
             keywords.click(handle_keyword_click);
         }
     };//init_keywords
-    var handle_keyword_click = function(eventObject) {
+    function handle_keyword_click(eventObject) {
         var searchText = jQuery(this).text();
         searchInput.val(searchText);
         searchButton.click();
@@ -164,7 +148,7 @@ var GSSearch = function (widgetId, ajaxPage, offset, limit, additionalQuery, adv
     // The Initializer
     // This is the closest we'll get to a classical constructor.
     //
-    var init = function() {
+    function init() {
         widget = jQuery(widgetId);
     
         searchInput = widget.find('.gs-search-entry input[type="text"]');
@@ -182,7 +166,8 @@ var GSSearch = function (widgetId, ajaxPage, offset, limit, additionalQuery, adv
         init_next_button();
 
         ajaxPageUrl = ajaxPage;
-    }();//init **Note** the () is deliberate so this function is run.
+    }
+    init(); //Run this function on startup
 
     // Return the public methods and properties.
     return {
