@@ -58,12 +58,14 @@ function GSSearch(widgetId, ajaxPage, offset, limit, additionalQuery,
         searchText = searchInput.val();
         offset = 0;
         results.fadeOut(FADE_SPEED, FADE_METHOD, do_results_load);
+        results.attr('aria-hidden', 'true');
     };//handle_search
 
     // Code to load the results in a pleasing way.
     function do_results_load() {
         // Function used by the buttons.
         loadingMessage.fadeIn(FADE_SPEED, FADE_METHOD, load_results);
+        loadingMessage.attr('aria-hidden', 'false');
     };//do_results_load
     function load_results() {
         // Actually load the results, making am AJAX request
@@ -90,11 +92,13 @@ function GSSearch(widgetId, ajaxPage, offset, limit, additionalQuery,
         results.html(responseText);
         // Hide the Loading message and show the results.
         loadingMessage.fadeOut(FADE_SPEED, FADE_METHOD, show_results);
+        loadingMessage.attr('aria-hidden', 'true');
     };// load_complete
     function show_results() {
         // Show the results list, and enable the buttons as required.
         var nResults = null;
         results.fadeIn(FADE_SPEED, FADE_METHOD);
+        results.attr('aria-hidden', 'false');
         //prevButton.button('option', 'disabled', offset <= 0); FIXME
         
         nResults = results.find('.gs-search-result').length;
