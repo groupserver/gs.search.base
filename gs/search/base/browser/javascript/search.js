@@ -12,10 +12,19 @@ function GSSearch(widgetId, ajaxPage, offset, limit, additionalQuery,
         RESULTS_LOADED_EVENT = "resultsloaded";
 
     // Private methods
-    
+    function disable_button(b) {
+        b.attr('disabled', 'disabled');
+        b.attr('aria-disabled', 'true');
+    }
+    function enable_button(b) {
+        b.removeAttr('disabled');
+        b.attr('aria-disabled', 'false');
+    }  
+
     // Previous Button
     function init_prev_button() {
         prevButton.on('click', handle_prev);
+        disable_button(prevButton);        
     };// init_prev_button
     function handle_prev(eventObject) {
         offset = offset - limit;
@@ -28,6 +37,7 @@ function GSSearch(widgetId, ajaxPage, offset, limit, additionalQuery,
     // Next button
     function init_next_button() {
         nextButton.on('click', handle_next);
+        disable_button(nextButton);
     };// init_next_button
     function handle_next(eventObject) {
         var nSticky = null;
@@ -94,16 +104,6 @@ function GSSearch(widgetId, ajaxPage, offset, limit, additionalQuery,
         loadingMessage.fadeOut(FADE_SPEED, FADE_METHOD, show_results);
         loadingMessage.attr('aria-hidden', 'true');
     };// load_complete
-
-    function disable_button(b) {
-        b.attr('disabled', 'disabled');
-        b.attr('aria-disabled', 'true');
-    }
-    function enable_button(b) {
-        b.removeAttr('disabled');
-        b.attr('aria-disabled', 'false');
-    }
-
     function show_results() {
         // Show the results list, and enable the buttons as required.
         var nResults = null;
