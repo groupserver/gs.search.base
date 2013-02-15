@@ -151,7 +151,7 @@ function GSSearch(widgetId, ajaxPage, offset, limit, additionalQuery,
     function init() {
         widget = jQuery(widgetId);
     
-        searchInput = widget.find('.gs-search-entry input[type="text"]');
+        searchInput = widget.find('.gs-search-entry input');
         init_search_input();
         searchButton = widget.find('.gs-search-entry button');
         init_search_button();
