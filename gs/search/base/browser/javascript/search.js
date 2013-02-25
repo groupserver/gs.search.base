@@ -24,19 +24,19 @@ function GSSearch(widgetId, ajaxPage, offset, limit, additionalQuery,
     // Previous Button
     function init_prev_button() {
         prevButton.on('click', handle_prev);
-    };// init_prev_button
+    }// init_prev_button
     function handle_prev(eventObject) {
         offset = offset - limit;
         if (offset < 0) {
             offset = 0
         }
-        results.fadeOut(FADE_SPEED, FADE_METHOD, do_results_load);
-    };//handle_prev
+        hide_and_load_results()
+    }//handle_prev
     
     // Next button
     function init_next_button() {
         nextButton.on('click', handle_next);
-    };// init_next_button
+    }// init_next_button
     function handle_next(eventObject) {
         var nSticky = null;
         if (searchInput.val()) {
@@ -45,13 +45,13 @@ function GSSearch(widgetId, ajaxPage, offset, limit, additionalQuery,
             nSticky = results.find('.gs-search-sticky').length;
             offset = offset + limit - nSticky;
         }
-        results.fadeOut(FADE_SPEED, FADE_METHOD, do_results_load);
-    };//handle_next
+        hide_and_load_results()
+    }//handle_next
     
     // Search Input
     function init_search_input() {
         searchInput.keypress(handle_search_input);
-    };// init_search_input
+    }// init_search_input
     function handle_search_input(eventObject) {
         if (eventObject.which == 13) {
             searchButton.click();
@@ -73,6 +73,16 @@ function GSSearch(widgetId, ajaxPage, offset, limit, additionalQuery,
         results.fadeOut(FADE_SPEED, FADE_METHOD, do_results_load);
         results.attr('aria-hidden', 'true');
     };//handle_search
+
+
+    function hide_and_load_results() {
+        var oldHeight = 0;
+        oldHeight = results.height();
+        
+        loadingMessage.height(oldHeight + 'px');
+        results.fadeOut(FADE_SPEED, FADE_METHOD, do_results_load);
+        results.attr('aria-hidden', 'true');
+    }
 
     // Code to load the results in a pleasing way.
     function do_results_load() {
@@ -112,6 +122,7 @@ function GSSearch(widgetId, ajaxPage, offset, limit, additionalQuery,
         var nResults = null;
         results.fadeIn(FADE_SPEED, FADE_METHOD);
         results.attr('aria-hidden', 'false');
+        loadingMessage.height('auto');
         
         enable(searchInput);
         enable(searchButton);
