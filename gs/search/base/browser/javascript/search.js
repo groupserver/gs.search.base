@@ -11,12 +11,11 @@ function GSSearch(widgetId, ajaxPage, offset, limit, additionalQuery,
                   advancedSearch) {
     // Private variables
     // Widgets
-    var widget = null, searchInput = null, searchButton = null,
-        loadingMessage = null, results = null, toolbar = null,
-        prevButton = null, nextButton = null, ajaxPageUrl = '', searchText = '',
-        toolbarShown = true, searchShown = true, resultsShown = false,
-        FADE_SPEED = 'slow', FADE_METHOD = 'swing',
-        RESULTS_LOADED_EVENT = "resultsloaded";
+    var widget=null, searchInput=null, searchButton=null, loadingMessage=null,
+        results=null, toolbar=null, prevButton=null, nextButton=null,
+        searchFailed=null, searchEmpty=null, ajaxPageUrl='', searchText='',
+        toolbarShown=true, resultsShown=false, FADE_SPEED='slow',
+        FADE_METHOD='swing', RESULTS_LOADED_EVENT="resultsloaded";
 
     // Private methods
     function disable(b) {
@@ -77,8 +76,15 @@ function GSSearch(widgetId, ajaxPage, offset, limit, additionalQuery,
 
         searchText = searchInput.val();
         offset = 0;
-        results.fadeOut(FADE_SPEED, FADE_METHOD, do_results_load);
-        results.attr('aria-hidden', 'true');
+        if (results.is(':visible')) {
+            results.attr('aria-hidden', 'true');
+            results.fadeOut(FADE_SPEED, FADE_METHOD, do_results_load);
+        } else if (searchFailed.is(':visible')) {
+            searchFailed.attr('aria-hidden', 'true');
+            searchFailed.fadeOut(FADE_SPEED, FADE_METHOD, do_results_load);
+        } else { // Init
+            do_results_load();
+        }
     };//handle_search
 
 
@@ -156,16 +162,21 @@ function GSSearch(widgetId, ajaxPage, offset, limit, additionalQuery,
         }
 
         // FIXME: Handle 0 results better
-        if ((nResults == 0) && searchShown) {
-            searchInput.fadeOut('fast', FADE_METHOD);
-            searchButton.fadeOut('fast', FADE_METHOD);
-            searchShown = false;
-        } else if ((nResults > 0) && !searchShown) {
-            searchInput.fadeIn('fast', FADE_METHOD);
-            searchButton.fadeIn('fast', FADE_METHOD);
-            searchShown = true;
-        }
 
+        if (nResults == 0) {
+            if (searchInput.val() === '') {
+                // There is nothing to find
+                searchEmpty.fadeIn('fast', FADE_METHOD);
+                searchInput.fadeOut('fast', FADE_METHOD);
+                searchButton.fadeOut('fast', FADE_METHOD);
+            } else { // if (searchInput.val() !== '') {
+                searchFailed.fadeIn('fast', FADE_METHOD);
+            }
+            if (results.is(':visible')) {
+                 // --=mpj17=-- Just hide; there is enough animation going on
+                results.hide();
+            }
+        }
         propogate_results_loaded_event()
         resultsShown = true;
     };//show_results
@@ -210,6 +221,11 @@ function GSSearch(widgetId, ajaxPage, offset, limit, additionalQuery,
         init_prev_button();
         nextButton = widget.find('.gs-search-toolbar-next');
         init_next_button();
+
+        searchEmpty = widget.find('.gs-search-empty');
+        searchEmpty.hide();
+        searchFailed = widget.find('.gs-search-failed');
+        searchFailed.hide();
 
         ajaxPageUrl = ajaxPage;
     }
