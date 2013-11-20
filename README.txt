@@ -46,24 +46,24 @@ This product provides a JavaScript module as a Zope_ `browser
 resource`_. Any Zope or Plone_ project should be able to use this product
 by placing the following line in a page template::
 
-  <script type="text/javascript" 
-          src="/++resource++gs-search-base-js-20121217.js" 
-          defer="true"> </script>     
+  <script type="text/javascript"
+          src="/++resource++gs-search-base-js-20121217.js"
+          defer="true"> </script>
 
 Users of other systems are invited to copy the file
 ``gs/search/base/browser/javascript/search.js`` out of this product.
 
 A minified version of the script is available, too::
 
-  <script type="text/javascript" 
-          src="/++resource++gs-search-base-js-min-20121217.js" 
-          defer="true"> </script>     
+  <script type="text/javascript"
+          src="/++resource++gs-search-base-js-min-20121217.js"
+          defer="true"> </script>
 
 Creation
 --------
 
 To create a search widget call the following::
-  
+
   GSSearch(widget, ajaxPage, offset, limit, additionalQuery, advancedSearchId)
 
 ``widget``:
@@ -72,7 +72,7 @@ To create a search widget call the following::
 ``ajaxPage``:
   The page to query to get the AJAX results (see `AJAX Page`_ below).
 
-``offset``: 
+``offset``:
   The *initial* offset into the search.
 
 ``limit``:
@@ -82,7 +82,7 @@ To create a search widget call the following::
   Extra items to pass to the ``ajaxPage`` as part of the query. Set it to
   ``{}`` if there are none.
 
-``advancedSearchId``: 
+``advancedSearchId``:
   The *Advanced Search* link. This will be updated to reflect the current
   search.
 
@@ -228,7 +228,7 @@ Resources
 - Questions and comments to http://groupserver.org/groups/development/
 - Report bugs at https://redmine.iopen.net/projects/groupserver/
 
-.. [#posts] See ``gs.group.messages.posts`` 
+.. [#posts] See ``gs.group.messages.posts``
             <https://source.iopen.net/groupserver/gs.group.messages.posts/>
 .. [#convenience] Convenience, and the fact that I prefer constants to strings.
 .. [#keywords] The keywords are optional.

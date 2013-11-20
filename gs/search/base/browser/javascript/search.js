@@ -1,14 +1,21 @@
 // GroupServer JavaScript module for providing the Search mechanism
+//
+// Copyright © 2013 OnlineGroups.net and Contributors.
+// All Rights Reserved.
+//
+// This software is subject to the provisions of the Zope Public License,
+// Version 2.1 (ZPL). http://groupserver.org/downloads/license/
+//
 jQuery.noConflict();
-function GSSearch(widgetId, ajaxPage, offset, limit, additionalQuery, 
+function GSSearch(widgetId, ajaxPage, offset, limit, additionalQuery,
                   advancedSearch) {
     // Private variables
     // Widgets
-    var widget = null, searchInput = null, searchButton = null, 
-        loadingMessage = null, results = null, toolbar = null, 
+    var widget = null, searchInput = null, searchButton = null,
+        loadingMessage = null, results = null, toolbar = null,
         prevButton = null, nextButton = null, ajaxPageUrl = '', searchText = '',
         toolbarShown = true, searchShown = true, resultsShown = false,
-        FADE_SPEED = 'slow', FADE_METHOD = 'swing', 
+        FADE_SPEED = 'slow', FADE_METHOD = 'swing',
         RESULTS_LOADED_EVENT = "resultsloaded";
 
     // Private methods
@@ -19,7 +26,7 @@ function GSSearch(widgetId, ajaxPage, offset, limit, additionalQuery,
     function enable(b) {
         b.removeAttr('disabled');
         b.attr('aria-disabled', 'false');
-    }  
+    }
 
     // Previous Button
     function init_prev_button() {
@@ -32,7 +39,7 @@ function GSSearch(widgetId, ajaxPage, offset, limit, additionalQuery,
         }
         hide_and_load_results()
     }//handle_prev
-    
+
     // Next button
     function init_next_button() {
         nextButton.on('click', handle_next);
@@ -47,7 +54,7 @@ function GSSearch(widgetId, ajaxPage, offset, limit, additionalQuery,
         }
         hide_and_load_results()
     }//handle_next
-    
+
     // Search Input
     function init_search_input() {
         searchInput.keypress(handle_search_input);
@@ -65,7 +72,7 @@ function GSSearch(widgetId, ajaxPage, offset, limit, additionalQuery,
     function handle_search(eventObject) {
         disable(searchInput);
         disable(searchButton);
-        disable(prevButton);        
+        disable(prevButton);
         disable(nextButton);
 
         searchText = searchInput.val();
@@ -78,7 +85,7 @@ function GSSearch(widgetId, ajaxPage, offset, limit, additionalQuery,
     function hide_and_load_results() {
         var oldHeight = 0;
         oldHeight = results.height();
-        
+
         loadingMessage.height(oldHeight + 'px');
         results.fadeOut(FADE_SPEED, FADE_METHOD, do_results_load);
         results.attr('aria-hidden', 'true');
@@ -93,7 +100,7 @@ function GSSearch(widgetId, ajaxPage, offset, limit, additionalQuery,
     function load_results() {
         // Actually load the results, making am AJAX request
         var data = null, href = null, query = null, newHref = null;
-        
+
         if (advancedSearch) {
             href = advancedSearch.attr('href');
             query = '&i='+offset+'&s='+searchText.replace(/ /, '+');
@@ -102,7 +109,7 @@ function GSSearch(widgetId, ajaxPage, offset, limit, additionalQuery,
         }
         if (additionalQuery === {}) {// Three = is deliberate
             data = {};
-        } else {        
+        } else {
             data = additionalQuery;
         };
         data['i'] = offset;
@@ -123,7 +130,7 @@ function GSSearch(widgetId, ajaxPage, offset, limit, additionalQuery,
         results.fadeIn(FADE_SPEED, FADE_METHOD);
         results.attr('aria-hidden', 'false');
         loadingMessage.height('auto');
-        
+
         enable(searchInput);
         enable(searchButton);
         if (offset <= 0) {
@@ -139,7 +146,7 @@ function GSSearch(widgetId, ajaxPage, offset, limit, additionalQuery,
         }
 
         init_keywords();
-        
+
         if ((offset <= 0) && (nResults < limit) && toolbarShown) {
             toolbar.fadeOut('fast', FADE_METHOD);
             toolbarShown = false;
@@ -147,7 +154,8 @@ function GSSearch(widgetId, ajaxPage, offset, limit, additionalQuery,
             toolbar.fadeIn('fast', FADE_METHOD);
             toolbarShown = true;
         }
-    
+
+        // FIXME: Handle 0 results better
         if ((nResults == 0) && searchShown) {
             searchInput.fadeOut('fast', FADE_METHOD);
             searchButton.fadeOut('fast', FADE_METHOD);
@@ -188,15 +196,15 @@ function GSSearch(widgetId, ajaxPage, offset, limit, additionalQuery,
     //
     function init() {
         widget = jQuery(widgetId);
-    
+
         searchInput = widget.find('.gs-search-entry input');
         init_search_input();
         searchButton = widget.find('.gs-search-entry button');
         init_search_button();
-        
+
         loadingMessage = widget.find('.gs-search-loading');
         results = widget.find('.gs-search-results');
-        
+
         toolbar = widget.find('.gs-search-toolbar');
         prevButton = widget.find('.gs-search-toolbar-previous');
         init_prev_button();
