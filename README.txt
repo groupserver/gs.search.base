@@ -107,6 +107,20 @@ to the `AJAX page`_. It is always a positive number; if it is 0 the
 number of search-results is less than the ``limit`` that is set during
 creation_.
 
+There are **two** cases of no results.
+
+#. The user searches for something, but nothing matched the search. In this
+   case the HTML_ with the ``gs-search-failed`` class will be shown.
+
+#. There is nothing to search. In this case the HTML marked with the
+   ``gs-search-empty`` class will be shown, and the search-entry will be
+   hidden. It is good practice to *mute* this HTML, because this is not an
+   error state.
+
+The system determines the difference between the two cases by looking at
+the search-entry: if it has text and the `AJAX Page`_ returns nothing then
+it must be the first case; else it the second.
+
 Methods
 -------
 
@@ -151,6 +165,10 @@ product HTML that conforms to the following structure:
 
   + Results: ``.gs-search-results``
 
+  + No results found: ``.gs-search-failed``
+
+  + Nothing to search: ``.gs-search-empty``
+
   + Toolbar: ``.gs-search-toolbar``
 
     - Next: ``.gs-search-toolbar-next``
@@ -173,13 +191,17 @@ roles. Neither is necessary, but both work with the search widget::
     <div class="gs-search-results">
       &#160;
     </div><!--gs-search-results-->
+    <p class="gs-search-failed">
+      No topics were found.
+    </p><!--gs-search-failed-->
+    <p class="gs-search-empty muted">
+      There are no topics in this group.
+    </p><!--gs-search-empty-->
     <div role="toolbar" class="btn-toolbar gs-search-toolbar">
       <button class="btn gs-search-toolbar-previous">Newer</button>
       <button class="btn gs-search-toolbar-next">Older</button>
     </div><!--gs-search-toolbar-->
   </div><!--gs-search-->
-
-
 
 During the creation_ of the search widget jQuery_ is used to add some
 functionality to the items.
