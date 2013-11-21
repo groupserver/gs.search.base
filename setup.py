@@ -46,7 +46,7 @@ setup(name='gs.search.base',
     install_requires=[
         'setuptools',
         'zope.browserresource',
-        'gs.content.js.jquery.base',
+        'gs.content.js.jquery.base[zope]',
     ],
     entry_points="""
     # -*- Entry points: -*-

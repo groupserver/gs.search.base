@@ -11,15 +11,15 @@
 <!-- WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE. -->
 <configure xmlns="http://namespaces.zope.org/zope"
-  xmlns:browser="http://namespaces.zope.org/browser">
+           xmlns:browser="http://namespaces.zope.org/browser">
 
   <!--The JavaScript library for the search boxes-->
   <browser:resource
-    name="gs-search-base-js-20121217.js"
+    name="gs-search-base-js-20131121.js"
     file="browser/javascript/search.js"
     permission="zope2.Public" />
-  <browser:resource
-    name="gs-search-base-js-min-20121217.js"
+ <browser:resource
+    name="gs-search-base-js-min-20131121.js"
     file="browser/javascript/search-min.js"
     permission="zope2.Public" />
 
