@@ -186,7 +186,8 @@ roles. Neither is necessary, but both work with the search widget::
               class="btn">Search</button>
     </div><!--gs-search-entry-->
     <p class="gs-search-loading" role="status">
-      <img src="/++resource++anim/wait.gif"/> Loading&#8230;
+      <span data-icon="&#xe619;" aria-hidden="true" class="loading"> </span>
+      Loading&#8230;
     </p><!--gs-search-loading-->
     <div class="gs-search-results">
       &#160;
