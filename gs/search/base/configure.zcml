@@ -24,4 +24,14 @@
     file="browser/javascript/search-min.js"
     permission="zope2.Public" />
 
+ <!--The old version number, for the shim -->
+  <browser:resource
+    name="gs-search-base-js-20121217.js"
+    file="browser/javascript/search.js"
+    permission="zope2.Public" />
+ <browser:resource
+    name="gs-search-base-js-min-20121217.js"
+    file="browser/javascript/search-min.js"
+    permission="zope2.Public" />
+
 </configure>
