@@ -1,3 +1,4 @@
+"use strict";
 // GroupServer JavaScript module for providing the Search mechanism
 //
 // Copyright © 2013, 2014 OnlineGroups.net and Contributors.
@@ -187,7 +188,7 @@ function GSSearch(widgetId, ajaxPage, offset, limit, additionalQuery,
 
     // Keywords
     function init_keywords() {
-        keywords = null;
+        var keywords = null;
         keywords = results.find('.gs-search-keyword');
         if (keywords.length > 0) {
             keywords.removeAttr('href').css("cursor","pointer");
