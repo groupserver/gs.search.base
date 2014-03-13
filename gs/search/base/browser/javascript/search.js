@@ -1,6 +1,6 @@
 // GroupServer JavaScript module for providing the Search mechanism
 //
-// Copyright © 2013 OnlineGroups.net and Contributors.
+// Copyright © 2013, 2014 OnlineGroups.net and Contributors.
 // All Rights Reserved.
 //
 // This software is subject to the provisions of the Zope Public License,
@@ -34,9 +34,9 @@ function GSSearch(widgetId, ajaxPage, offset, limit, additionalQuery,
     function handle_prev(eventObject) {
         offset = offset - limit;
         if (offset < 0) {
-            offset = 0
+            offset = 0;
         }
-        hide_and_load_results()
+        hide_and_load_results();
     }//handle_prev
 
     // Next button
@@ -44,14 +44,14 @@ function GSSearch(widgetId, ajaxPage, offset, limit, additionalQuery,
         nextButton.on('click', handle_next);
     }// init_next_button
     function handle_next(eventObject) {
-        var nSticky = null;
+        var nSticky=null;
         if (searchInput.val()) {
             offset = offset + limit;
         } else {
             nSticky = results.find('.gs-search-sticky').length;
             offset = offset + limit - nSticky;
         }
-        hide_and_load_results()
+        hide_and_load_results();
     }//handle_next
 
     // Search Input
@@ -62,12 +62,12 @@ function GSSearch(widgetId, ajaxPage, offset, limit, additionalQuery,
         if (eventObject.which == 13) {
             searchButton.click();
         }
-    };// handle_search_input
+    }// handle_search_input
 
     // Search Button
     function init_search_button() {
         searchButton.on('click', handle_search);
-    };//init_search_button
+    }//init_search_button
     function handle_search(eventObject) {
         disable(searchInput);
         disable(searchButton);
@@ -89,7 +89,7 @@ function GSSearch(widgetId, ajaxPage, offset, limit, additionalQuery,
 
 
     function hide_and_load_results() {
-        var oldHeight = 0;
+        var oldHeight=0;
         oldHeight = results.height();
 
         loadingMessage.height(oldHeight + 'px');
@@ -102,14 +102,14 @@ function GSSearch(widgetId, ajaxPage, offset, limit, additionalQuery,
         // Function used by the buttons.
         loadingMessage.fadeIn(FADE_SPEED, FADE_METHOD, load_results);
         loadingMessage.attr('aria-hidden', 'false');
-    };//do_results_load
+    }//do_results_load
     function load_results() {
         // Actually load the results, making am AJAX request
-        var data = null, href = null, query = null, newHref = null;
+        var data=null, href=null, query=null, newHref=null;
 
         if (advancedSearch) {
             href = advancedSearch.attr('href');
-            query = '&i='+offset+'&s='+searchText.replace(/ /, '+');
+            query = '&i=' + offset + '&s=' + searchText.replace(/ /, '+');
             newHref = href.replace(/&i.*$/, query);
             advancedSearch.attr('href', newHref);
         }
@@ -117,22 +117,22 @@ function GSSearch(widgetId, ajaxPage, offset, limit, additionalQuery,
             data = {};
         } else {
             data = additionalQuery;
-        };
+        }
         data['i'] = offset;
         data['l'] = limit;
         data['s'] = searchText;
         jQuery.post(ajaxPageUrl, data, load_complete);
-    };// load_results
+    }// load_results
     function load_complete(responseText, textStatus, request) {
         // Set the contents of the results-list to the respose.
         results.html(responseText);
         // Hide the Loading message and show the results.
         loadingMessage.fadeOut(FADE_SPEED, FADE_METHOD, show_results);
         loadingMessage.attr('aria-hidden', 'true');
-    };// load_complete
+    }// load_complete
     function show_results() {
         // Show the results list, and enable the buttons as required.
-        var nResults = null;
+        var nResults=null;
         results.fadeIn(FADE_SPEED, FADE_METHOD);
         results.attr('aria-hidden', 'false');
         loadingMessage.height('auto');
@@ -161,8 +161,6 @@ function GSSearch(widgetId, ajaxPage, offset, limit, additionalQuery,
             toolbarShown = true;
         }
 
-        // FIXME: Handle 0 results better
-
         if (nResults == 0) {
             if (searchInput.val() === '') {
                 // There is nothing to find
@@ -177,14 +175,15 @@ function GSSearch(widgetId, ajaxPage, offset, limit, additionalQuery,
                 results.hide();
             }
         }
-        propogate_results_loaded_event()
+        propogate_results_loaded_event();
         resultsShown = true;
-    };//show_results
+    } //show_results
 
     function propogate_results_loaded_event() {
-        var event = jQuery.Event(RESULTS_LOADED_EVENT);
+        var event=null;
+        event = jQuery.Event(RESULTS_LOADED_EVENT);
         widget.trigger(event);
-    };
+    }
 
     // Keywords
     function init_keywords() {
@@ -194,12 +193,12 @@ function GSSearch(widgetId, ajaxPage, offset, limit, additionalQuery,
             keywords.removeAttr('href').css("cursor","pointer");
             keywords.click(handle_keyword_click);
         }
-    };//init_keywords
+    }//init_keywords
     function handle_keyword_click(eventObject) {
         var searchText = jQuery(this).text();
         searchInput.val(searchText);
         searchButton.click();
-    };//handle_keyword_click
+    }//handle_keyword_click
 
     //
     // The Initializer
@@ -241,4 +240,4 @@ function GSSearch(widgetId, ajaxPage, offset, limit, additionalQuery,
         },// results_shown
         'RESULTS_LOADED_EVENT': RESULTS_LOADED_EVENT
     };// Public methods
-};//GSSearch
+}//GSSearch
