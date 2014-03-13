@@ -14,9 +14,10 @@ p.fadeOut(A,g,O);p.attr("aria-hidden","true")}function O(){var Q=null;q.fadeIn(A
 q.attr("aria-hidden","false");p.height("auto");h(f);h(y);if(E<=0){d(J)}else{h(J)}Q=q.find(".gs-search-result").length;
 if(Q<s){d(r)}else{h(r)}l();if((E<=0)&&(Q<s)&&L){m.fadeOut("fast",g);L=false}else{if(((E>0)||(Q>=s))&&!L){m.fadeIn("fast",g);
 L=true}}if(Q==0){if(f.val()===""){c.fadeIn("fast",g);f.fadeOut("fast",g);y.fadeOut("fast",g)
-}else{M.fadeIn("fast",g)}if(q.is(":visible")){q.hide()}}x();w=true}function x(){var Q=jQuery.Event(i);
-z.trigger(Q)}function l(){keywords=null;keywords=q.find(".gs-search-keyword");if(keywords.length>0){keywords.removeAttr("href").css("cursor","pointer");
-keywords.click(n)}}function n(Q){var R=jQuery(this).text();f.val(R);y.click()}function K(){z=jQuery(e);
+}else{M.fadeIn("fast",g)}if(q.is(":visible")){q.hide()}}x();w=true}function x(){var Q=null;
+Q=jQuery.Event(i);z.trigger(Q)}function l(){keywords=null;keywords=q.find(".gs-search-keyword");
+if(keywords.length>0){keywords.removeAttr("href").css("cursor","pointer");keywords.click(n)
+}}function n(Q){var R=jQuery(this).text();f.val(R);y.click()}function K(){z=jQuery(e);
 f=z.find(".gs-search-entry input");F();y=z.find(".gs-search-entry button");H();p=z.find(".gs-search-loading");
 q=z.find(".gs-search-results");m=z.find(".gs-search-toolbar");J=z.find(".gs-search-toolbar-previous");
 C();r=z.find(".gs-search-toolbar-next");b();c=z.find(".gs-search-empty");c.hide();
