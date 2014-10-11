@@ -72,7 +72,7 @@ Creation
 
 To create a search widget call the following:
 
-.. code-block: javascript
+.. code-block:: javascript
 
   GSSearch(widget, ajaxPage, offset, limit, additionalQuery, advancedSearchId)
 
@@ -195,7 +195,7 @@ Below is a typical layout for a search widget. In addition to the classes
 above, some classes used by Bootstrap_ are shown, as well as WAI-ARIA
 roles. Neither is necessary, but both work with the search widget:
 
-.. code-block: xml
+.. code-block:: xml
 
   <div class="gs-search">
     <div class="gs-search-entry search input-append">
