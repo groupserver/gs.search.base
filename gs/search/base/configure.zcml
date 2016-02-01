@@ -16,6 +16,16 @@
 
   <!--The JavaScript library for the search boxes-->
   <browser:resource
+    name="gs-search-base-js-20160201.js"
+    file="browser/javascript/search.js"
+    permission="zope2.Public" />
+ <browser:resource
+    name="gs-search-base-js-min-20160201.js"
+    file="browser/javascript/search-min.js"
+    permission="zope2.Public" />
+
+ <!--The old version number -->
+  <browser:resource
     name="gs-search-base-js-20140313.js"
     file="browser/javascript/search.js"
     permission="zope2.Public" />
@@ -23,8 +33,6 @@
     name="gs-search-base-js-min-20140313.js"
     file="browser/javascript/search-min.js"
     permission="zope2.Public" />
-
- <!--The old version number, for the shim -->
   <browser:resource
     name="gs-search-base-js-20121217.js"
     file="browser/javascript/search.js"
