@@ -1,11 +1,26 @@
 Changelog
 =========
 
+2.3.2 (2016-02-01)
+------------------
+
+* Using Sphinx for the documentation
+* Moving the documentation to `Read the Docs`_
+* Cleaning up the JavaScript, so it passes `the Google Closure
+  linter`_
+
+.. _Read the Docs:
+   http://groupserver.readthedocs.org/projects/gssearchbase
+.. _the Google Closure linter:
+   https://developers.google.com/closure/utilities/
+
 2.3.1 (2014-10-10)
 ------------------
 
-* Pointing at GitHub, and renaming the reStructuredText files as
-  such
+* Pointing at GitHub_
+* Naming the reStructuredText files as such
+
+.. _GitHub: https://github.com/groupserver/gs.search.base
 
 2.3.0 (2014-03-13)
 ------------------
@@ -42,3 +57,5 @@ Changelog
 * Initial version. Refactored from similar code in
   ``gs.group.messages.topic``, ``gs.group.messages.posts``, and
   ``gs.group.messages.files``
+
+..  LocalWords:  Changelog linter GitHub reStructuredText
