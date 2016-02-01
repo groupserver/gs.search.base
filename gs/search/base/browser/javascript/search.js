@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 // GroupServer JavaScript module for providing the Search mechanism
 //
 // Copyright © 2013, 2014 OnlineGroups.net and Contributors.
@@ -12,11 +12,12 @@ function GSSearch(widgetId, ajaxPage, offset, limit, additionalQuery,
                   advancedSearch) {
     // Private variables
     // Widgets
-    var widget=null, searchInput=null, searchButton=null, loadingMessage=null,
-        results=null, toolbar=null, prevButton=null, nextButton=null,
-        searchFailed=null, searchEmpty=null, ajaxPageUrl='', searchText='',
-        toolbarShown=true, resultsShown=false, FADE_SPEED='slow',
-        FADE_METHOD='swing', RESULTS_LOADED_EVENT="resultsloaded";
+    var widget = null, searchInput = null, searchButton = null,
+        loadingMessage = null, results = null, toolbar = null,
+        prevButton = null, nextButton = null, searchFailed = null,
+        searchEmpty = null, ajaxPageUrl = '', searchText = '',
+        toolbarShown = true, resultsShown = false, FADE_SPEED = 'slow',
+        FADE_METHOD = 'swing', RESULTS_LOADED_EVENT = 'resultsloaded';
 
     // Private methods
     function disable(b) {
@@ -45,7 +46,7 @@ function GSSearch(widgetId, ajaxPage, offset, limit, additionalQuery,
         nextButton.on('click', handle_next);
     }// init_next_button
     function handle_next(eventObject) {
-        var nSticky=null;
+        var nSticky = null;
         if (searchInput.val()) {
             offset = offset + limit;
         } else {
@@ -90,7 +91,7 @@ function GSSearch(widgetId, ajaxPage, offset, limit, additionalQuery,
 
 
     function hide_and_load_results() {
-        var oldHeight=0;
+        var oldHeight = 0;
         oldHeight = results.height();
 
         loadingMessage.height(oldHeight + 'px');
@@ -106,7 +107,7 @@ function GSSearch(widgetId, ajaxPage, offset, limit, additionalQuery,
     }//do_results_load
     function load_results() {
         // Actually load the results, making am AJAX request
-        var data=null, href=null, query=null, newHref=null;
+        var data = null, href = null, query = null, newHref = null;
 
         if (advancedSearch) {
             href = advancedSearch.attr('href');
@@ -133,7 +134,7 @@ function GSSearch(widgetId, ajaxPage, offset, limit, additionalQuery,
     }// load_complete
     function show_results() {
         // Show the results list, and enable the buttons as required.
-        var nResults=null;
+        var nResults = null;
         results.fadeIn(FADE_SPEED, FADE_METHOD);
         results.attr('aria-hidden', 'false');
         loadingMessage.height('auto');
@@ -181,7 +182,7 @@ function GSSearch(widgetId, ajaxPage, offset, limit, additionalQuery,
     } //show_results
 
     function propogate_results_loaded_event() {
-        var event=null;
+        var event = null;
         event = jQuery.Event(RESULTS_LOADED_EVENT);
         widget.trigger(event);
     }
@@ -191,7 +192,7 @@ function GSSearch(widgetId, ajaxPage, offset, limit, additionalQuery,
         var keywords = null;
         keywords = results.find('.gs-search-keyword');
         if (keywords.length > 0) {
-            keywords.removeAttr('href').css("cursor","pointer");
+            keywords.removeAttr('href').css('cursor', 'pointer');
             keywords.click(handle_keyword_click);
         }
     }//init_keywords
@@ -233,10 +234,10 @@ function GSSearch(widgetId, ajaxPage, offset, limit, additionalQuery,
 
     // Return the public methods and properties.
     return {
-        load: function () {
+        load: function() {
             searchButton.click();
         }, // load
-        results_shown: function () {
+        results_shown: function() {
             return resultsShown;
         },// results_shown
         'RESULTS_LOADED_EVENT': RESULTS_LOADED_EVENT
