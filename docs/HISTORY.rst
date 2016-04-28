@@ -10,7 +10,7 @@ Changelog
   linter`_
 
 .. _Read the Docs:
-   http://groupserver.readthedocs.org/projects/gssearchbase
+   http://groupserver.readthedocs.io/projects/gssearchbase
 .. _the Google Closure linter:
    https://developers.google.com/closure/utilities/
 
