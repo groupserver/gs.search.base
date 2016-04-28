@@ -25,7 +25,7 @@ Resources
 =========
 
 - Documentation:
-  http://groupserver.readthedocs.org/projects/gssearchbase
+  http://groupserver.readthedocs.io/projects/gssearchbase
 - Code repository: https://github.com/groupserver/gs.search.base/
 - Questions and comments to
   http://groupserver.org/groups/development/
